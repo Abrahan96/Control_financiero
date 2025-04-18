@@ -7,7 +7,7 @@ load_dotenv()
 
 # obtener datos desde variables de entorno
 url: str = os.getenv("SUPABASE_URL")
-key: str = os.getenv("SUPABASE_KE")
+key: str = os.getenv("SUPABASE_KEY")
 
 #Conexion
 
