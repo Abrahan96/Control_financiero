@@ -1,10 +1,30 @@
 import streamlit as st
-import time
-from supabase import create_client, Client
-from dotenv import load_dotenv
-import os
-
+import datetime
+from modules.supabase_client import supabase
 
 def formulario():
-    st.header("Ingresar movimiento")
+    st.header(" 📥 Registrar movimiento")
     tipo = st.selectbox("Tipo de movimiento", ["Ingreso", "Egreso"])
+    monto = st.number_input("Monto", min_value=0.01, step=0.01, format="%.2f")
+    descripcion = st.text_area("Descripción")
+    fecha = st.date_input("Fecha", value=datetime.date.today())
+    categoria = st.selectbox("Categoría",["Repuestos","Movilidad","Personal","Alquiler","Reparación","Mantenimiento","Préstamo","Otros"])
+
+if st.button("Registrar"):
+    if monto and descripcion:
+        date ={
+            "tipo": tipo,
+            "monto": monto,
+            "descripcion": descripcion,
+            "fecha": fecha.strftime("%y-%m-%d"),
+            "categoria": categoria,
+            "activo": True
+        }
+        
+        try:
+            supabase.table("cotizacion").insert(data).execute()
+            st.success("✅ Movimiento registrado correctamente")
+        except Exception as e:
+            st.error(f"❌ Error al registrar: {e}")
+        else:
+            st.warning("⚠️ Completa todos los campos obligatorios")
