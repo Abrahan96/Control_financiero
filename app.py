@@ -1,3 +1,8 @@
-from modules.supabase_client import supabase
-data = supabase.table("transacciones").select("*").execute
-print(data)
+import streamlit as st
+import time
+import pandas as pd
+import plotly.express as px
+
+#cargando logo
+def mostrar_logo():
+    st.sidebar.image("Logo.JPG", width=200)
