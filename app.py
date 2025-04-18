@@ -1,13 +1,10 @@
 import streamlit as st
-import time
-import pandas as pd
-from supabase import create_client, Client
-from modules import formulario
+from modules.formulario import formulario
 
-#cargando logo
-def mostrar_logo():
-    st.sidebar.image("Logo.JPG", width=200)
-    
-st.title("Montargas ML")
+st.set_page_config(page_title="Control Financiero", layout="centered")
+st.sidebar.title("📊 Navegación")
 
-formulario
+opcion = st.sidebar.radio("Ir a:", ["Formulario"])
+
+if opcion == "Formulario":
+    formulario()
