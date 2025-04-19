@@ -16,7 +16,7 @@ def formulario():
                 "tipo": tipo,
                 "monto": monto,
                 "descripcion": descripcion,
-                "fecha": fecha.strftime("%Y-%m-%d"),
+                "fecha": fecha.strftime("%Y-%M-%D"),
                 "categoria": categoria,
                 "activo": True
             }
