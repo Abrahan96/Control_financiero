@@ -6,9 +6,9 @@ st.set_page_config(page_title="Control Financiero", layout="centered")
 
 st.sidebar.title("📊 Navegación")
 
-opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualizacion"])
+opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualización"])
 
 if opcion == "Formulario":
     formulario()
-elif opcion == "Visualizacion":
+elif opcion == "Visualización":
     visualizacion()
