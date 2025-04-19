@@ -22,7 +22,7 @@ def formulario():
             }
         
             try:
-                supabase.table("cotizacion").insert(data).execute()
+                supabase.table("transacciones").insert(data).execute()
                 st.success("✅ Movimiento registrado correctamente")
             except Exception as e:
                 st.error(f"❌ Error al registrar: {e}")
