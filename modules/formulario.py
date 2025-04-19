@@ -8,7 +8,7 @@ def formulario():
     monto = st.number_input("Monto", min_value=0.01, step=0.01, format="%.2f")
     descripcion = st.text_area("Descripción")
     fecha = st.date_input("Fecha", value=datetime.date.today())
-    categoria = st.selectbox("Categoría",["Repuestos","Movilidad","Personal","Alquiler","Reparación","Mantenimiento","Préstamo","Otros","Epps"])
+    categoria = st.selectbox("Categoría",["Repuestos","Movilidad","Personal","Alquiler","Reparación","Mantenimiento","Préstamo","Otros","Epps","Gasto financiero"])
 
     if st.button("Registrar"):
         if monto and descripcion:

@@ -28,13 +28,13 @@ def historial():
         nueva_fecha = st.date_input("Fecha", value=pd.to_datetime(fila["fecha"]))
         nueva_categoria = st.selectbox("Categoría", [
             "Repuestos", "Movilidad", "Personal", "Alquiler", "Reparación",
-            "Mantenimiento", "Préstamo", "Otros", "Epps",
+            "Mantenimiento", "Préstamo", "Otros", "Epps", "Gasto financiero",
         ], index=0 if fila["categoria"] not in [
             "Repuestos", "Movilidad", "Personal", "Alquiler", "Reparación",
-            "Mantenimiento", "Préstamo", "Otros", "Epps",
+            "Mantenimiento", "Préstamo", "Otros", "Epps", "Gasto financiero",
         ] else [
             "Repuestos", "Movilidad", "Personal", "Alquiler", "Reparación",
-            "Mantenimiento", "Préstamo", "Otros", "Epps",
+            "Mantenimiento", "Préstamo", "Otros", "Epps", "Gasto financiero",
         ].index(fila["categoria"]))
 
         # Botón actualizar
