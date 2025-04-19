@@ -1,34 +1,32 @@
 import streamlit as st
 import streamlit_authenticator as stauth
+    
+names = ['John Smith', 'Rebecca Briggs']
+usernames = ['jsmith', 'rbriggs']
+passwords = ['123', '456']
+    
+hashed_passwords = stauth.Hasher(passwords).generate()
+    
+authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
+    'some_cookie_name', 'some_signature_key', cookie_expiry_days=30)
 
-# Usuarios
-nombres = ["Administrador"]
-usuarios = ["admin"]
-contrasenas = ["1234"]  # Contraseñas en texto plano
-
-# Generar hash de contraseñas
-hashed_passwords = stauth.Hasher(contrasenas).generate()
-
-# Autenticación
-authenticator = stauth.Authenticate(
-    names=nombres,
-    usernames=usuarios,
-    cookie_name="control_financiero_login",
-    key="firma_secreta",
-    cookie_expiry_days=1
-)
-
-def login():
-    nombre, auth_status, usuario = authenticator.login("Iniciar sesión", "main")
-
-    if auth_status == False:
-        st.error("❌ Usuario o contraseña incorrectos")
-    elif auth_status == None:
-        st.warning("🔒 Por favor ingresa tus credenciales")
-    elif auth_status:
-        st.success(f"✅ Bienvenido, {nombre}")
-        authenticator.logout("Cerrar sesión", "sidebar")
-        return True
-
-    return False
+def login(): 
+    name, authentication_status, username = authenticator.login('Login', 'main')
+    
+    if authentication_status:
+        authenticator.logout('Logout', 'main')
+        st.write('Welcome *%s*' % (name))
+        st.title('Some content')
+    elif authentication_status == False:
+        st.error('Username/password is incorrect')
+    elif authentication_status == None:
+        st.warning('Please enter your username and password')
+    
+    if st.session_state['authentication_status']:
+        st.write('Welcome *%s*' % (st.session_state['name']))
+        st.title('Some content')
+    elif st.session_state['authentication_status'] == False:
+        st.error('Username/password is incorrect')
+    elif st.session_state['authentication_status'] == None:
+        st.warning('Please enter your username and password')
 
