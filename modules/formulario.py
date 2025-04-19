@@ -10,21 +10,21 @@ def formulario():
     fecha = st.date_input("Fecha", value=datetime.date.today())
     categoria = st.selectbox("Categoría",["Repuestos","Movilidad","Personal","Alquiler","Reparación","Mantenimiento","Préstamo","Otros"])
 
-if st.button("Registrar"):
-    if monto and descripcion:
-        date ={
-            "tipo": tipo,
-            "monto": monto,
-            "descripcion": descripcion,
-            "fecha": fecha.strftime("%y-%m-%d"),
-            "categoria": categoria,
-            "activo": True
-        }
+    if st.button("Registrar"):
+        if monto and descripcion:
+            date ={
+                "tipo": tipo,
+                "monto": monto,
+                "descripcion": descripcion,
+                "fecha": fecha.strftime("%y-%m-%d"),
+                "categoria": categoria,
+                "activo": True
+            }
         
-        try:
-            supabase.table("cotizacion").insert(data).execute()
-            st.success("✅ Movimiento registrado correctamente")
-        except Exception as e:
-            st.error(f"❌ Error al registrar: {e}")
-        else:
-            st.warning("⚠️ Completa todos los campos obligatorios")
+            try:
+                supabase.table("cotizacion").insert(data).execute()
+                st.success("✅ Movimiento registrado correctamente")
+            except Exception as e:
+                st.error(f"❌ Error al registrar: {e}")
+            else:
+                st.warning("⚠️ Completa todos los campos obligatorios")
