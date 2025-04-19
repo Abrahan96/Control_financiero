@@ -1,23 +1,33 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 
-# Usuarios
-nombres = ["Administrador"]
-usuarios = ["admin"]
-contrasenas = ["1234"]  # Contraseñas en texto plano
-
 # Generar hash de contraseñas
+contrasenas = ["1234"]
 hashed_passwords = stauth.Hasher(contrasenas).generate()
 
-# Autenticación
-authenticator = stauth.Authenticate(
-    names=nombres,
-    usernames=usuarios,
-    passwords=hashed_passwords,
-    cookie_name="control_financiero_login",
-    key="firma_secreta",
-    cookie_expiry_days=1
-)
+# Configuración en formato diccionario
+config = {
+    "credentials": {
+        "usernames": {
+            "admin": {
+                "name": "Administrador",
+                "password": hashed_passwords[0]
+            }
+        }
+    },
+    "cookie": {
+        "name": "control_financiero_login",
+        "key": "firma_secreta",
+        "expiry_days": 1
+    },
+    "preauthorized": {
+        "emails": []
+    }
+}
+
+# Crear autenticador
+authenticator = stauth.Authenticate(config)
+
 
 def login():
     nombre, auth_status, usuario = authenticator.login("Iniciar sesión", "main")
