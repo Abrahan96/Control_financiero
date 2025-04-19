@@ -1,6 +1,10 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 
+# Inicializar el estado de la sesión si no está presente
+if 'authentication_status' not in st.session_state:
+    st.session_state['authentication_status'] = None
+
 # Generar hash de contraseñas
 contrasenas = ["1234"]
 hashed_passwords = ['$2b$12$DQsXCuZi9utgakO.qezjeOUg3iU58j0Fgta0oTTtAbgnem6dQBafe']
@@ -47,4 +51,5 @@ def login():
         return True
 
     return False
+
 
