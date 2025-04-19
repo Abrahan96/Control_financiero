@@ -5,7 +5,7 @@ import streamlit_authenticator as stauth
 contrasenas = ["1234"]
 hashed_passwords = stauth.Hasher(contrasenas).generate()
 
-# Configuración en formato diccionario
+# Configuración
 config = {
     "credentials": {
         "usernames": {
@@ -25,9 +25,14 @@ config = {
     }
 }
 
-# Crear autenticador
-authenticator = stauth.Authenticate(config)
-
+# Crear autenticador (forma correcta con parámetros separados)
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
+)
 
 def login():
     nombre, auth_status, usuario = authenticator.login("Iniciar sesión", "main")
@@ -42,3 +47,4 @@ def login():
         return True
 
     return False
+
