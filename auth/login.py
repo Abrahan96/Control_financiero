@@ -13,7 +13,6 @@ hashed_passwords = stauth.Hasher(contrasenas).generate()
 authenticator = stauth.Authenticate(
     names=nombres,
     usernames=usuarios,
-    passwords=hashed_passwords,
     cookie_name="control_financiero_login",
     key="firma_secreta",
     cookie_expiry_days=1
