@@ -1,6 +1,6 @@
 import streamlit as st
 from modules.formulario import formulario
-from modules.visualización import visualizacion
+from modules.visualizacion import visualizacion
 
 st.set_page_config(page_title="Control Financiero", layout="centered")
 
