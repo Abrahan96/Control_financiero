@@ -7,7 +7,7 @@ if 'authentication_status' not in st.session_state:
 
 # Generar hash de contraseñas
 contrasenas = ["1234"]
-hashed_passwords = ['$2b$12$DQsXCuZi9utgakO.qezjeOUg3iU58j0Fgta0oTTtAbgnem6dQBafe']
+hashed_passwords = ['$2b$12$Ef8qZgdNPxl23fh8bBItDehKd3wwxvyXOEds6oElk51pJZQ/Huezm']
 
 # Configuración
 config = {
