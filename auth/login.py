@@ -3,7 +3,7 @@ import streamlit_authenticator as stauth
 
 # Generar hash de contraseñas
 contrasenas = ["1234"]
-hashed_passwords = stauth.Hasher(contrasenas).generate()
+hashed_passwords = ['$2b$12$DQsXCuZi9utgakO.qezjeOUg3iU58j0Fgta0oTTtAbgnem6dQBafe']
 
 # Configuración
 config = {
