@@ -12,7 +12,7 @@ def formulario():
 
     if st.button("Registrar"):
         if monto and descripcion:
-            date ={
+            data ={
                 "tipo": tipo,
                 "monto": monto,
                 "descripcion": descripcion,
@@ -26,5 +26,5 @@ def formulario():
                 st.success("✅ Movimiento registrado correctamente")
             except Exception as e:
                 st.error(f"❌ Error al registrar: {e}")
-            else:
+        else:
                 st.warning("⚠️ Completa todos los campos obligatorios")
