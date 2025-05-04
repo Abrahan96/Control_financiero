@@ -8,9 +8,7 @@ from modules.historial import historial
 from modules.backup import backup
 from auth.login import login
 
-is_authenticated, nombre_usuario, rol_usuario = login()
-
-if is_authenticated:
+if login():
     st.sidebar.title(f"📊 Navegación - {nombre_usuario}")
 
     opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualización", "Historial", "Backup"])
