@@ -6,7 +6,7 @@ from modules.formulario import formulario
 from modules.visualizacion import visualizacion
 from modules.historial import historial
 from modules.backup import backup
-from auth.login import login
+from auth.login import login_db
 
 st.set_page_config(page_title="Control Financiero", layout="centered")
 
