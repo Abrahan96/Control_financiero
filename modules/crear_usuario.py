@@ -1,10 +1,5 @@
-from supabase import create_client
 from passlib.hash import bcrypt
-
-# Conexión a Supabase
-url = "TU_SUPABASE_URL"
-key = "TU_SUPABASE_API_KEY"
-supabase = create_client(url, key)
+from modules.supabase_client import supabase
 
 # Datos del nuevo usuario
 nuevo_usuario = {

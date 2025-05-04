@@ -9,7 +9,7 @@ from modules.backup import backup
 from auth.login import login
 
 if login():
-    st.sidebar.title(f"📊 Navegación - {nombre_usuario}")
+    st.sidebar.title(f"📊 Navegación")
 
     opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualización", "Historial", "Backup"])
 
