@@ -5,14 +5,14 @@ from modules.historial import historial
 from modules.backup import backup
 from auth.login import login
 
-# Configuración de la página
+# Configurar la página
 st.set_page_config(page_title="Control Financiero", layout="centered")
 
-# Inicializar el estado de sesión
+# Inicializar el estado de autenticación
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
-# Si no está autenticado, mostrar login
+# Verificar autenticación
 if not st.session_state.autenticado:
     usuario_autenticado = login()
     if usuario_autenticado:
@@ -20,9 +20,17 @@ if not st.session_state.autenticado:
     else:
         st.stop()
 
-# Interfaz de navegación
+# Sidebar y navegación
 st.sidebar.title("📊 Navegación")
-opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualización", "Historial", "Backup", "Cerrar sesión"])
+
+# Botón para cerrar sesión
+if st.sidebar.button("🔒 Cerrar sesión"):
+    st.session_state.autenticado = False
+    st.success("Sesión cerrada correctamente. Recarga la página para iniciar nuevamente.")
+    st.stop()
+
+# Menú de navegación
+opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualización", "Historial", "Backup"])
 
 # Mostrar página correspondiente
 if opcion == "Formulario":
@@ -33,6 +41,4 @@ elif opcion == "Historial":
     historial()
 elif opcion == "Backup":
     backup()
-elif opcion == "Cerrar sesión":
-    st.session_state.autenticado = False
-    st.experimental_rerun()  # Refrescar la app para volver al login
+
