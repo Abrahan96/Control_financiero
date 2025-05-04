@@ -8,9 +8,7 @@ from modules.historial import historial
 from modules.backup import backup
 from auth.login import login_db
 
-st.set_page_config(page_title="Control Financiero", layout="centered")
-
-is_authenticated, nombre_usuario, rol_usuario = login()
+is_authenticated, nombre_usuario, rol_usuario = login_db()
 
 if is_authenticated:
     st.sidebar.title(f"📊 Navegación - {nombre_usuario}")
