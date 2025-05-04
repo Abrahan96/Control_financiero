@@ -1,55 +1,42 @@
 import streamlit as st
-import streamlit_authenticator as stauth
+from modules.supabase_client import supabase
+from passlib.hash import bcrypt
 
-# Inicializar el estado de la sesión si no está presente
-if 'authentication_status' not in st.session_state:
-    st.session_state['authentication_status'] = None
+def login_db():
+    st.title("🔐 Iniciar sesión")
 
-# Generar hash de contraseñas
-contrasenas = ["1234"]
-hashed_passwords = ['$2b$12$Ef8qZgdNPxl23fh8bBItDehKd3wwxvyXOEds6oElk51pJZQ/Huezm']
+    username = st.text_input("Usuario")
+    password = st.text_input("Contraseña", type="password")
 
-# Configuración
-config = {
-    "credentials": {
-        "usernames": {
-            "admin": {
-                "name": "Administrador",
-                "password": hashed_passwords[0]
-            }
-        }
-    },
-    "cookie": {
-        "name": "control_financiero_login",
-        "key": "firma_secreta",
-        "expiry_days": 1
-    },
-    "preauthorized": {
-        "emails": []
-    }
-}
+    login_button = st.button("Ingresar")
 
-# Crear autenticador (forma correcta con parámetros separados)
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
+    if login_button:
+        if username and password:
+            try:
+                # Buscar usuario en Supabase
+                response = supabase.table("usuarios").select("*").eq("username", username).eq("activo", True).execute()
+                usuarios = response.data
 
-def login():
-    nombre, auth_status, usuario = authenticator.login("Iniciar sesión", "main")
+                if not usuarios:
+                    st.error("❌ Usuario no encontrado o inactivo.")
+                    return False, None, None
 
-    if auth_status == False:
-        st.error("❌ Usuario o contraseña incorrectos")
-    elif auth_status == None:
-        st.warning("🔒 Por favor ingresa tus credenciales")
-    elif auth_status:
-        st.success(f"✅ Bienvenido, {nombre}")
-        authenticator.logout("Cerrar sesión", "sidebar")
-        return True
+                usuario = usuarios[0]
 
-    return False
+                # Verificar contraseña
+                if bcrypt.verify(password, usuario['password']):
+                    st.success(f"✅ Bienvenido {usuario['nombre']}")
+                    return True, usuario['nombre'], usuario['rol']
+                else:
+                    st.error("❌ Contraseña incorrecta.")
+                    return False, None, None
+
+            except Exception as e:
+                st.error(f"Error en la autenticación: {e}")
+                return False, None, None
+        else:
+            st.warning("⚠️ Completa todos los campos.")
+
+    return False, None, None
 
 

@@ -8,8 +8,12 @@ from modules.historial import historial
 from modules.backup import backup
 from auth.login import login
 
-if login():
-    st.sidebar.title("📊 Navegación")
+st.set_page_config(page_title="Control Financiero", layout="centered")
+
+is_authenticated, nombre_usuario, rol_usuario = login()
+
+if is_authenticated:
+    st.sidebar.title(f"📊 Navegación - {nombre_usuario}")
 
     opcion = st.sidebar.radio("Ir a:", ["Formulario", "Visualización", "Historial", "Backup"])
 
@@ -21,3 +25,5 @@ if login():
         historial()
     elif opcion == "Backup":
         backup()
+else:
+    st.stop()
