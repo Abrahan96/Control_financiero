@@ -37,4 +37,12 @@ def login():
     return False
 
 
+username = "admin"
+raw_password = "1234"
+hashed = bcrypt.hash(raw_password)
 
+supabase.table("usuarios").insert({
+    "username": username.lower(),
+    "password": hashed,
+    "rol": "admin"
+}).execute()
