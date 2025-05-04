@@ -6,9 +6,9 @@ from modules.formulario import formulario
 from modules.visualizacion import visualizacion
 from modules.historial import historial
 from modules.backup import backup
-from auth.login import login_db
+from auth.login import login
 
-is_authenticated, nombre_usuario, rol_usuario = login_db()
+is_authenticated, nombre_usuario, rol_usuario = login()
 
 if is_authenticated:
     st.sidebar.title(f"📊 Navegación - {nombre_usuario}")

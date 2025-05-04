@@ -1,42 +1,40 @@
 import streamlit as st
-from modules.supabase_client import supabase
 from passlib.hash import bcrypt
+from modules.supabase_client import supabase  # Asegúrate de tener esto configurado
 
-def login_db():
-    st.title("🔐 Iniciar sesión")
+def login():
+    st.title("Iniciar sesión")
 
-    username = st.text_input("Usuario")
-    password = st.text_input("Contraseña", type="password")
+    username_input = st.text_input("Usuario").strip().lower()
+    password_input = st.text_input("Contraseña", type="password")
 
-    login_button = st.button("Ingresar")
+    if st.button("Iniciar sesión"):
+        try:
+            # Buscar al usuario en Supabase
+            result = supabase.table("usuarios").select("*").eq("username", username_input).execute()
 
-    if login_button:
-        if username and password:
-            try:
-                # Buscar usuario en Supabase
-                response = supabase.table("usuarios").select("*").eq("username", username).eq("activo", True).execute()
-                usuarios = response.data
+            if result.data:
+                user = result.data[0]
 
-                if not usuarios:
-                    st.error("❌ Usuario no encontrado o inactivo.")
-                    return False, None, None
+                # Verificar contraseña con bcrypt
+                if bcrypt.verify(password_input, user["password"]):
+                    st.success(f"✅ Bienvenido, {user['username']}")
 
-                usuario = usuarios[0]
+                    # Guardar en sesión
+                    st.session_state['usuario'] = user['username']
+                    st.session_state['rol'] = user.get('rol', 'sin rol')
+                    st.session_state['autenticado'] = True
 
-                # Verificar contraseña
-                if bcrypt.verify(password, usuario['password']):
-                    st.success(f"✅ Bienvenido {usuario['nombre']}")
-                    return True, usuario['nombre'], usuario['rol']
+                    return True
                 else:
-                    st.error("❌ Contraseña incorrecta.")
-                    return False, None, None
+                    st.error("❌ Contraseña incorrecta")
+            else:
+                st.warning("⚠️ Usuario no encontrado")
 
-            except Exception as e:
-                st.error(f"Error en la autenticación: {e}")
-                return False, None, None
-        else:
-            st.warning("⚠️ Completa todos los campos.")
+        except Exception as e:
+            st.error(f"🚫 Error al autenticar: {e}")
 
-    return False, None, None
+    return False
+
 
 
